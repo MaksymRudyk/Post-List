@@ -1,6 +1,6 @@
 <template>
-  <div class="dialog" v-show="isVisible">
-    <div class="dialog__content">
+  <div class="dialog" v-if="isVisible" @click="hideDialog">
+    <div @click.stop class="dialog__content">
       <slot></slot>
     </div>
   </div>
@@ -14,6 +14,12 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+
+  methods: {
+    hideDialog() {
+      this.$emit('update:isVisible', false)
+    }
   }
 }
 </script>
@@ -24,7 +30,6 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 999;
   background: rgba(0, 0, 0, 0.5);
   position: fixed;
   display: flex;

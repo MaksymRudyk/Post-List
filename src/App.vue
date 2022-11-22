@@ -1,14 +1,20 @@
 <template>
-  <my-button @click="!visible">Cоздать Пост</my-button>
-  <my-dialog :is-visible="visible" @click="openDialog">
-    <PostForm
-        @create="createPost"
-    ></PostForm>
-  </my-dialog>
-  <PostList
-      :posts="posts"
-      @remove="deletePost"
-  ></PostList>
+  <div class="app">
+    <h1 style="margin: 10px 0">Post page</h1>
+    <my-button
+        @click="showDialog(true)" style="margin: 10px 0">Create post</my-button>
+    <my-dialog v-model:isVisible="modalVisible">
+      <PostForm
+          @create="createPost"
+          @hideModal="showDialog"
+          v-model:isVisible="modalVisible"
+      ></PostForm>
+    </my-dialog>
+    <PostList
+        :posts="posts"
+        @remove="deletePost"
+    ></PostList>
+  </div>
 </template>
 
 <script>
@@ -52,14 +58,12 @@ export default {
 
     deletePost(post) {
       this.posts = this.posts.filter(item => item.id !== post.id)
-    }
-  },
+    },
 
-  computed: {
-     modalVisible: {
-       return
-     }
-  }
+    showDialog(isVisible) {
+      this.modalVisible = isVisible
+    },
+  },
 }
 
 </script>
@@ -69,5 +73,10 @@ export default {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+  }
+
+  .app {
+    width: 90%;
+    margin: auto;
   }
 </style>

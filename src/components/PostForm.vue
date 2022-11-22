@@ -39,6 +39,7 @@ export default {
         title: '',
         body: ''
       }
+      this.$emit('hideModal', false)
     }
   }
 }
